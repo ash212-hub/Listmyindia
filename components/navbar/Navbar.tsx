@@ -34,7 +34,16 @@ export default function Navbar() {
                         {/* Logo */}
                         <Link href="/" className="flex items-center gap-2">
                             <div className="flex items-center justify-center w-8 h-8 bg-[#2947b5] rounded-lg">
-                                <MapPin className="w-4 h-4 text-white" />
+                                {/* <MapPin className="w-4 h-4 text-white" /> */}
+
+                                <Image
+                                    src="/logo.png"
+                                    alt="Logo"
+                                    width={0}
+                                    height={0}
+                                    sizes="150vw"
+                                    className="w-16 h-16 object-contain"
+                                />
                             </div>
                             <span
                                 className={`font-semibold text-lg transition-colors ${isScrolled ? "text-gray-900" : "text-white"
