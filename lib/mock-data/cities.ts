@@ -1,0 +1,28 @@
+import { City } from "@/types"
+
+export const popularCities: City[] = [
+  { id: "1", name: "Mumbai", state: "Maharashtra", pincode: "400001", lat: 19.076, lng: 72.8777 },
+  { id: "2", name: "Delhi", state: "Delhi", pincode: "110001", lat: 28.6139, lng: 77.209 },
+  { id: "3", name: "Bangalore", state: "Karnataka", pincode: "560001", lat: 12.9716, lng: 77.5946 },
+  { id: "4", name: "Hyderabad", state: "Telangana", pincode: "500001", lat: 17.385, lng: 78.4867 },
+  { id: "5", name: "Chennai", state: "Tamil Nadu", pincode: "600001", lat: 13.0827, lng: 80.2707 },
+  { id: "6", name: "Kolkata", state: "West Bengal", pincode: "700001", lat: 22.5726, lng: 88.3639 },
+  { id: "7", name: "Pune", state: "Maharashtra", pincode: "411001", lat: 18.5204, lng: 73.8567 },
+  { id: "8", name: "Ahmedabad", state: "Gujarat", pincode: "380001", lat: 23.0225, lng: 72.5714 },
+  { id: "9", name: "Jaipur", state: "Rajasthan", pincode: "302001", lat: 26.9124, lng: 75.7873 },
+  { id: "10", name: "Surat", state: "Gujarat", pincode: "395001", lat: 21.1702, lng: 72.8311 },
+  { id: "11", name: "Lucknow", state: "Uttar Pradesh", pincode: "226001", lat: 26.8467, lng: 80.9462 },
+  { id: "12", name: "Kanpur", state: "Uttar Pradesh", pincode: "208001", lat: 26.4499, lng: 80.3319 },
+  { id: "13", name: "Nagpur", state: "Maharashtra", pincode: "440001", lat: 21.1458, lng: 79.0882 },
+  { id: "14", name: "Indore", state: "Madhya Pradesh", pincode: "452001", lat: 22.7196, lng: 75.8577 },
+  { id: "15", name: "Bhopal", state: "Madhya Pradesh", pincode: "462001", lat: 23.2599, lng: 77.4126 },
+  { id: "16", name: "Visakhapatnam", state: "Andhra Pradesh", pincode: "530001", lat: 17.6868, lng: 83.2185 },
+  { id: "17", name: "Patna", state: "Bihar", pincode: "800001", lat: 25.5941, lng: 85.1376 },
+  { id: "18", name: "Coimbatore", state: "Tamil Nadu", pincode: "641001", lat: 11.0168, lng: 76.9558 },
+  { id: "19", name: "Kochi", state: "Kerala", pincode: "682001", lat: 9.9312, lng: 76.2673 },
+  { id: "20", name: "Chandigarh", state: "Punjab", pincode: "160001", lat: 30.7333, lng: 76.7794 },
+  { id: "21", name: "Guwahati", state: "Assam", pincode: "781001", lat: 26.1445, lng: 91.7362 },
+  { id: "22", name: "Bhubaneswar", state: "Odisha", pincode: "751001", lat: 20.2961, lng: 85.8245 },
+  { id: "23", name: "Thiruvananthapuram", state: "Kerala", pincode: "695001", lat: 8.5241, lng: 76.9366 },
+  { id: "24", name: "Vadodara", state: "Gujarat", pincode: "390001", lat: 22.3072, lng: 73.1812 },
+]

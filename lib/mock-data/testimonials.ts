@@ -1,0 +1,64 @@
+import { Testimonial } from "@/types"
+
+export const testimonials: Testimonial[] = [
+    {
+        id: "1",
+        name: "Rajesh Kumar",
+        business: "Rajesh Electronics",
+        city: "Hyderabad",
+        quote:
+            "After listing on ListMyIndia, my shop got 3x more walk-in customers within the first month. The visibility is incredible for a small business like mine.",
+        rating: 5,
+        avatar: "RK",
+    },
+    {
+        id: "2",
+        name: "Priya Sharma",
+        business: "Priya Beauty Studio",
+        city: "Mumbai",
+        quote:
+            "I was struggling to get new clients. ListMyIndia helped me reach customers in my area who didn't even know my salon existed. Now I'm fully booked on weekends!",
+        rating: 5,
+        avatar: "PS",
+    },
+    {
+        id: "3",
+        name: "Mohammed Farhan",
+        business: "Farhan Caterers",
+        city: "Delhi",
+        quote:
+            "The free listing itself brought us 15 new catering orders in 2 months. Best decision I made for my business. Highly recommend to every local business owner.",
+        rating: 5,
+        avatar: "MF",
+    },
+    {
+        id: "4",
+        name: "Anita Patel",
+        business: "Anita Boutique",
+        city: "Ahmedabad",
+        quote:
+            "ListMyIndia is like having a digital shopfront. Customers find me on Google now through my listing. My revenue has gone up by 40% since joining.",
+        rating: 4,
+        avatar: "AP",
+    },
+    {
+        id: "5",
+        name: "Suresh Reddy",
+        business: "Reddy Auto Garage",
+        city: "Bangalore",
+        quote:
+            "People from nearby areas started calling me after they found my garage on ListMyIndia. The pincode-based search is a game changer for hyperlocal businesses.",
+        rating: 5,
+        avatar: "SR",
+    },
+    {
+        id: "6",
+        name: "Kavitha Nair",
+        business: "Kavitha Ayurvedic Centre",
+        city: "Kochi",
+        quote:
+            "As an Ayurvedic practitioner, I needed patients who specifically look for natural treatments. ListMyIndia's category system brought exactly the right customers to me.",
+        rating: 5,
+        avatar: "KN",
+    },
+]
