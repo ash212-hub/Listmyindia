@@ -20,7 +20,27 @@ export default function LoginPage() {
     const handleGoogleSignIn = async () => {
         try {
             setFormError(null)
-            await signInWithGoogle()
+
+            const user = await signInWithGoogle()
+
+
+            const isNewUser =
+                user.metadata.creationTime ===
+                user.metadata.lastSignInTime
+
+            if (isNewUser) {
+                await fetch("/api/send-welcome", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email: user.email,
+                        name: user.displayName || "User",
+                    }),
+                })
+            }
+
             router.push("/")
         } catch {
             setFormError("Google sign in failed. Please try again.")
@@ -29,11 +49,32 @@ export default function LoginPage() {
 
     const handleEmailSignIn = async (e: React.FormEvent) => {
         e.preventDefault()
+
         if (!email || !password) return
+
         setFormLoading(true)
         setFormError(null)
+
         try {
-            await signInWithEmail(email, password)
+            const user = await signInWithEmail(email, password)
+
+            const isNewUser =
+                user.metadata.creationTime ===
+                user.metadata.lastSignInTime
+
+            if (isNewUser) {
+                await fetch("/api/send-welcome", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email: user.email,
+                        name: user.displayName || "User",
+                    }),
+                })
+            }
+
             router.push("/")
         } catch (err: any) {
             if (err.code === "auth/invalid-credential") {
