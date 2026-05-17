@@ -2,16 +2,25 @@
 
 import { useEffect } from "react"
 import Link from "next/link"
-import { X, MapPin } from "lucide-react"
+import Image from "next/image"
+import { X, MapPin, LogOut, User } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { NAV_LINKS } from "@/lib/constants"
+import { User as FirebaseUser } from "firebase/auth"
 
 interface MobileMenuProps {
     isOpen: boolean
     onClose: () => void
+    user: FirebaseUser | null
+    onLogout: () => void
 }
 
-export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
+export default function MobileMenu({
+    isOpen,
+    onClose,
+    user,
+    onLogout,
+}: MobileMenuProps) {
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = "hidden"
@@ -33,7 +42,7 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                 onClick={onClose}
             />
 
-            {/* Menu Panel */}
+            {/* Panel */}
             <div className="absolute right-0 top-0 bottom-0 w-72 bg-white flex flex-col">
 
                 {/* Header */}
@@ -52,7 +61,34 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     </button>
                 </div>
 
-                {/* Links */}
+                {/* User info if logged in */}
+                {user && (
+                    <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
+                        {user.photoURL ? (
+                            <Image
+                                src={user.photoURL}
+                                alt={user.displayName || "User"}
+                                width={36}
+                                height={36}
+                                className="rounded-full"
+                            />
+                        ) : (
+                            <div className="w-9 h-9 rounded-full bg-[#2947b5] flex items-center justify-center">
+                                <span className="text-white text-sm font-bold">
+                                    {user.displayName?.[0] || user.email?.[0] || "U"}
+                                </span>
+                            </div>
+                        )}
+                        <div>
+                            <p className="text-gray-900 font-medium text-sm">
+                                {user.displayName || "User"}
+                            </p>
+                            <p className="text-gray-400 text-xs truncate">{user.email}</p>
+                        </div>
+                    </div>
+                )}
+
+                {/* Nav links */}
                 <nav className="flex flex-col px-4 py-6 gap-1 flex-1">
                     {NAV_LINKS.map((link) => (
                         <Link
@@ -64,18 +100,48 @@ export default function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                             {link.label}
                         </Link>
                     ))}
+
+                    {user && (
+                        <Link
+                            href="/dashboard"
+                            onClick={onClose}
+                            className="px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-gray-50 hover:text-[#2947b5] transition-colors flex items-center gap-2"
+                        >
+                            <User className="w-4 h-4" />
+                            Dashboard
+                        </Link>
+                    )}
                 </nav>
 
-                {/* Bottom CTA */}
-                <div className="px-6 py-6 border-t border-gray-100">
-                    <Button
-                        asChild
-                        className="w-full bg-[#ff6b35] hover:bg-[#e55a26] text-white"
-                    >
-                        <Link href="/register" onClick={onClose}>
-                            List Your Business Free
-                        </Link>
-                    </Button>
+                {/* Bottom */}
+                <div className="px-6 py-6 border-t border-gray-100 flex flex-col gap-3">
+                    {user ? (
+                        <button
+                            onClick={() => { onLogout(); onClose() }}
+                            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-red-200 text-red-500 hover:bg-red-50 transition-colors text-sm font-medium"
+                        >
+                            <LogOut className="w-4 h-4" />
+                            Sign out
+                        </button>
+                    ) : (
+                        <>
+                            <Link
+                                href="/login"
+                                onClick={onClose}
+                                className="w-full flex items-center justify-center py-3 rounded-xl border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors text-sm font-medium"
+                            >
+                                Sign in
+                            </Link>
+                            <Button
+                                asChild
+                                className="w-full bg-[#ff6b35] hover:bg-[#e55a26] text-white"
+                            >
+                                <Link href="/register" onClick={onClose}>
+                                    List Your Business Free
+                                </Link>
+                            </Button>
+                        </>
+                    )}
                 </div>
 
             </div>
