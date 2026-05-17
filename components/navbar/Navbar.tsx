@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button"
 import { NAV_LINKS } from "@/lib/constants"
 import { useAuth } from "@/hooks/useAuth"
 import MobileMenu from "./MobileMenu"
+import { usePathname } from "next/navigation"
 
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false)
@@ -16,6 +17,7 @@ export default function Navbar() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const { user, logout } = useAuth()
     const router = useRouter()
+    const pathname = usePathname()
 
     useEffect(() => {
         const handleScroll = () => setIsScrolled(window.scrollY > 10)
@@ -62,7 +64,9 @@ export default function Navbar() {
                                 <Link
                                     key={link.href}
                                     href={link.href}
-                                    className={`text-sm font-medium transition-colors hover:text-[#2947b5] ${isScrolled ? "text-gray-600" : "text-white/90"
+                                    className={`text-sm font-medium transition-colors hover:text-[#2947b5] ${isScrolled || pathname !== "/"
+                                        ? "text-gray-600"
+                                        : "text-white/90"
                                         }`}
                                 >
                                     {link.label}

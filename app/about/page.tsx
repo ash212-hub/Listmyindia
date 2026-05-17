@@ -14,6 +14,7 @@ import {
     ArrowRight,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 const stats = [
     { value: "19,000+", label: "Pin Codes" },
@@ -29,7 +30,8 @@ const team = [
         role: "Founder",
         description:
             "Empowering Small-Scale Entrepreneurs | Vocal for Local Advocate | Bhaiya, Listed ho kya?",
-        linkedin: "https://www.linkedin.com/company/listmyindia/",
+        linkedin: "https://www.linkedin.com/in/sanjeevroy4u/",
+        avatar: "https://media.licdn.com/dms/image/v2/D5603AQEodP3fbKAfkw/profile-displayphoto-crop_800_800/B56ZyfZDXQHQAI-/0/1772200672335?e=1780531200&v=beta&t=-19gjrf6MZJ-AXsRAH_o-7Y8pgiyC3CzX1glwSzMu18",
     },
     {
         initials: "SC",
@@ -37,7 +39,9 @@ const team = [
         role: "Co-Founder",
         description:
             "List My India | Empowering Small-Scale Entrepreneurs | Vocal for Local Advocate",
-        linkedin: "https://www.linkedin.com/company/listmyindia/",
+        linkedin: "https://www.linkedin.com/in/sonal-chandra-29411093/",
+        avatar: "https://media.licdn.com/dms/image/v2/D5603AQF1qVbtLz345Q/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1719556125593?e=1780531200&v=beta&t=2-jdSfAb9C1qNA0Lj4r8uil-Klx5QydKnjBkpGvZXAs"
+
     },
     {
         initials: "SS",
@@ -45,7 +49,8 @@ const team = [
         role: "Business Development",
         description:
             "Founder @ ListMyBusiness | Business Visibility, Partnerships",
-        linkedin: "https://www.linkedin.com/company/listmyindia/",
+        linkedin: "https://www.linkedin.com/in/samad-shaikh-13b12b237/",
+        avatar: "https://media.licdn.com/dms/image/v2/D4D03AQHfCR6nng3QEQ/profile-displayphoto-crop_800_800/B4DZmfrb0HGwAI-/0/1759320590389?e=1780531200&v=beta&t=OLMF2OOX86mzJD5-KrQFVp2Zqn1NgMszta2l4JiHLbM"
     },
 ]
 
@@ -360,9 +365,13 @@ export default function AboutPage() {
                                 className="bg-gray-50 rounded-2xl border border-gray-100 p-6 text-center hover:shadow-md transition-all duration-300"
                             >
                                 <div className="w-16 h-16 rounded-full bg-[#2947b5] flex items-center justify-center mx-auto mb-4">
-                                    <span className="text-white font-bold text-lg">
-                                        {member.initials}
-                                    </span>
+                                    <Image
+                                        src={member.avatar}
+                                        alt={member.name}
+                                        width={80}
+                                        height={80}
+                                        className="rounded-full object-cover"
+                                    />
                                 </div>
                                 <h3 className="font-semibold text-gray-900 text-lg mb-0.5">
                                     {member.name}
@@ -494,7 +503,7 @@ export default function AboutPage() {
                             <Button
                                 asChild
                                 variant="outline"
-                                className="border-white/20 text-white hover:bg-white/10 px-6 py-2.5 rounded-xl"
+                                className="border-white/20 hover:text-white text-black hover:bg-white/10 px-6 py-2.5 rounded-xl"
                             >
                                 <Link href="/growth-partner">Become a Partner</Link>
                             </Button>
