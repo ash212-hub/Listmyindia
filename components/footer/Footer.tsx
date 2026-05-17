@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { MapPin, Phone, Mail, Globe } from "lucide-react"
 import { SOCIAL_LINKS, CONTACT } from "@/lib/constants"
-
+import Image from "next/image"
 const footerLinks = {
     forBusinesses: [
         { label: "List Your Business", href: "/register" },
@@ -78,12 +78,16 @@ export default function Footer() {
                     <div className="lg:col-span-2">
 
                         <Link href="/" className="flex items-center gap-2 mb-4">
-                            <div className="w-8 h-8 bg-[#2947b5] rounded-lg flex items-center justify-center">
-                                <MapPin className="w-4 h-4 text-white" />
-                            </div>
+
 
                             <span className="font-bold text-lg">
-                                ListMyIndia
+
+                                <Image
+                                    src="/listmyindialogo.png"
+                                    alt="Verified"
+                                    width={150}
+                                    height={30}
+                                />
                             </span>
                         </Link>
 
