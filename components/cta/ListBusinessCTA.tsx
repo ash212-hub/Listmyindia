@@ -108,7 +108,7 @@ export default function ListBusinessCTA() {
               <Button
                 asChild
                 variant="outline"
-                className="border-white/20 text-white hover:bg-white/10 px-8 py-3 rounded-xl"
+                className="border-white/20 text-black hover:text-white hover:bg-white/10 px-8 py-3 rounded-xl"
               >
                 <Link href="/plans">View plans</Link>
               </Button>
@@ -124,7 +124,8 @@ export default function ListBusinessCTA() {
             className="flex flex-col gap-4"
           >
             {/* Big stat */}
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 text-center">
+            {/* Big stat card */}
+            <div className="card-glow bg-white/5 border border-white/10 rounded-2xl p-8 text-center">
               <div className="text-6xl font-bold text-white mb-2">
                 1.6M<span className="text-[#ff6b35]">+</span>
               </div>
@@ -133,10 +134,7 @@ export default function ListBusinessCTA() {
               </p>
               <div className="flex justify-center gap-1 mt-4">
                 {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-5 h-5 text-[#ff6b35] fill-[#ff6b35]"
-                  />
+                  <Star key={i} className="w-5 h-5 text-[#ff6b35] fill-[#ff6b35]" />
                 ))}
               </div>
               <p className="text-white/40 text-xs mt-2">
@@ -146,13 +144,13 @@ export default function ListBusinessCTA() {
 
             {/* Mini stats */}
             <div className="grid grid-cols-2 gap-4">
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
+              <div className="card-glow bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
                 <div className="text-3xl font-bold text-[#ff6b35] mb-1">
                   19,300+
                 </div>
                 <p className="text-white/50 text-xs">Pincodes covered</p>
               </div>
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
+              <div className="card-glow bg-white/5 border border-white/10 rounded-2xl p-6 text-center">
                 <div className="text-3xl font-bold text-[#ff6b35] mb-1">
                   500+
                 </div>
@@ -161,7 +159,7 @@ export default function ListBusinessCTA() {
             </div>
 
             {/* Trust badges */}
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-5 flex items-center justify-around">
+            <div className="card-glow bg-white/5 border border-white/10 rounded-2xl p-5 flex items-center justify-around">
               <div className="text-center">
                 <BadgeCheck className="w-8 h-8 text-[#2947b5] mx-auto mb-1" />
                 <p className="text-white/60 text-xs">Verified listings</p>

@@ -3,7 +3,7 @@
 import { motion } from "framer-motion"
 import { Star, Quote } from "lucide-react"
 import { Testimonial } from "@/types"
-
+import Image from "next/image"
 interface TestimonialCardProps {
   testimonial: Testimonial
   index: number
@@ -43,11 +43,13 @@ export default function TestimonialCard({
 
       {/* Author */}
       <div className="flex items-center gap-3 pt-4 border-t border-gray-50">
-        <div className="w-10 h-10 rounded-full bg-[#2947b5] flex items-center justify-center flex-shrink-0">
-          <span className="text-white text-xs font-bold">
-            {testimonial.avatar}
-          </span>
-        </div>
+        <Image
+          src={testimonial.avatar}
+          alt={testimonial.name}
+          width={40}
+          height={40}
+          className="rounded-full bg-gray-100 flex-shrink-0"
+        />
         <div>
           <p className="text-gray-900 font-semibold text-sm">
             {testimonial.name}
