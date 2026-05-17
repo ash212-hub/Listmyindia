@@ -1,150 +1,187 @@
  "use client"
 
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { X, MapPin, LogOut, User } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { Menu, MapPin, LogOut, User, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { NAV_LINKS } from "@/lib/constants"
-import { User as FirebaseUser } from "firebase/auth"
+import { useAuth } from "@/hooks/useAuth"
+import MobileMenu from "./MobileMenu"
+import { usePathname } from "next/navigation"
 
-interface MobileMenuProps {
-    isOpen: boolean
-    onClose: () => void
-    user: FirebaseUser | null
-    onLogout: () => void
-}
+export default function Navbar() {
+    const [isScrolled, setIsScrolled] = useState(false)
+    const [isMobileOpen, setIsMobileOpen] = useState(false)
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+    const { user, logout } = useAuth()
+    const router = useRouter()
+    const pathname = usePathname()
 
-export default function MobileMenu({
-    isOpen,
-    onClose,
-    user,
-    onLogout,
-}: MobileMenuProps) {
     useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = "hidden"
-        } else {
-            document.body.style.overflow = ""
-        }
-        return () => {
-            document.body.style.overflow = ""
-        }
-    }, [isOpen])
+        const handleScroll = () => setIsScrolled(window.scrollY > 10)
+        window.addEventListener("scroll", handleScroll)
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [])
 
-    if (!isOpen) return null
+    const handleLogout = async () => {
+        await logout()
+        setIsDropdownOpen(false)
+        router.push("/")
+    }
 
     return (
-        <div className="fixed inset-0 z-50 md:hidden">
-            {/* Backdrop */}
-            <div
-                className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-                onClick={onClose}
-            />
+        <>
+            <header
+                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+                    ? "bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100"
+                    : "bg-transparent"
+                    }`}
+            >
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex items-center justify-between h-16">
 
-            {/* Panel */}
-            <div className="absolute right-0 top-0 bottom-0 w-72 bg-white flex flex-col">
-
-                {/* Header */}
-                <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-                    <div className="flex items-center gap-2">
-                        <div className="flex items-center justify-center w-8 h-8 bg-[#2947b5] rounded-lg">
-                            <MapPin className="w-4 h-4 text-white" />
-                        </div>
-                        <span className="font-semibold text-gray-900">ListMyIndia</span>
-                    </div>
-                    <button
-                        onClick={onClose}
-                        className="p-2 rounded-lg text-gray-500 hover:bg-gray-100"
-                    >
-                        <X className="w-5 h-5" />
-                    </button>
-                </div>
-
-                {/* User info if logged in */}
-                {user && (
-                    <div className="px-6 py-4 border-b border-gray-100 flex items-center gap-3">
-                        {user.photoURL ? (
-                            <Image
-                                src={user.photoURL}
-                                alt={user.displayName || "User"}
-                                width={36}
-                                height={36}
-                                className="rounded-full"
-                            />
-                        ) : (
-                            <div className="w-9 h-9 rounded-full bg-[#2947b5] flex items-center justify-center">
-                                <span className="text-white text-sm font-bold">
-                                    {user.displayName?.[0] || user.email?.[0] || "U"}
-                                </span>
+                        {/* Logo */}
+                        <Link href="/" className="flex items-center gap-2">
+                            <div className="flex items-center justify-center  bg-[#2947b5] rounded-lg p-2">
+                                <Image
+                                    src="/listmyindialogo.png"
+                                    alt="ListMyIndia"
+                                    width={90}
+                                    height={70}
+                                    className="text-white"
+                                />
                             </div>
-                        )}
-                        <div>
-                            <p className="text-gray-900 font-medium text-sm">
-                                {user.displayName || "User"}
-                            </p>
-                            <p className="text-gray-400 text-xs truncate">{user.email}</p>
+
+
+
+                        </Link>
+
+                        {/* Desktop Nav */}
+                        <nav className="hidden md:flex items-center gap-8">
+                            {NAV_LINKS.map((link) => (
+                                <Link
+                                    key={link.href}
+                                    href={link.href}
+                                    className={`text-sm font-medium transition-colors hover:text-[#2947b5] ${isScrolled || pathname !== "/"
+                                        ? "text-gray-600"
+                                        : "text-white/90"
+                                        }`}
+                                >
+                                    {link.label}
+                                </Link>
+                            ))}
+                        </nav>
+
+                        {/* Right side */}
+                        <div className="flex items-center gap-3">
+
+                            {user ? (
+                                // Logged in — show user dropdown
+                                <div className="hidden md:block relative">
+                                    <button
+                                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                        className={`flex items-center gap-2 px-3 py-2 rounded-xl transition-colors ${isScrolled
+                                            ? "hover:bg-gray-100"
+                                            : "hover:bg-white/10"
+                                            }`}
+                                    >
+                                        {user.photoURL ? (
+                                            <Image
+                                                src={user.photoURL}
+                                                alt={user.displayName || "User"}
+                                                width={28}
+                                                height={28}
+                                                className="rounded-full"
+                                            />
+                                        ) : (
+                                            <div className="w-7 h-7 rounded-full bg-[#2947b5] flex items-center justify-center">
+                                                <span className="text-white text-xs font-bold">
+                                                    {user.displayName?.[0] || user.email?.[0] || "U"}
+                                                </span>
+                                            </div>
+                                        )}
+                                        <span
+                                            className={`text-sm font-medium transition-colors ${isScrolled ? "text-gray-700" : "text-white"
+                                                }`}
+                                        >
+                                            {user.displayName?.split(" ")[0] || "Account"}
+                                        </span>
+                                        <ChevronDown
+                                            className={`w-4 h-4 transition-colors ${isScrolled ? "text-gray-500" : "text-white/70"
+                                                }`}
+                                        />
+                                    </button>
+
+                                    {/* Dropdown */}
+                                    {isDropdownOpen && (
+                                        <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-2xl shadow-lg border border-gray-100 py-2 z-50">
+                                            <div className="px-4 py-2 border-b border-gray-50 mb-1">
+                                                <p className="text-gray-900 font-medium text-sm truncate">
+                                                    {user.displayName || "User"}
+                                                </p>
+                                                <p className="text-gray-400 text-xs truncate">
+                                                    {user.email}
+                                                </p>
+                                            </div>
+                                            <Link
+                                                href="/dashboard"
+                                                onClick={() => setIsDropdownOpen(false)}
+                                                className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                                            >
+                                                <User className="w-4 h-4" />
+                                                Dashboard
+                                            </Link>
+                                            <button
+                                                onClick={handleLogout}
+                                                className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors"
+                                            >
+                                                <LogOut className="w-4 h-4" />
+                                                Sign out
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            ) : (
+                                // Not logged in — show login + list free
+                                <div className="hidden md:flex items-center gap-3">
+                                    <Link
+                                        href="/login"
+                                        className={`text-sm font-medium transition-colors hover:text-[#2947b5] ${isScrolled ? "text-gray-600" : "text-white/90"
+                                            }`}
+                                    >
+                                        Sign in
+                                    </Link>
+                                    <Button
+                                        asChild
+                                        className="bg-[#ff6b35] hover:bg-[#e55a26] text-white text-sm px-4 py-2 rounded-lg"
+                                    >
+                                        <Link href="/register">List Free</Link>
+                                    </Button>
+                                </div>
+                            )}
+
+                            {/* Mobile toggle */}
+                            <button
+                                onClick={() => setIsMobileOpen(true)}
+                                className={`md:hidden p-2 rounded-lg transition-colors ${isScrolled ? "text-gray-700" : "text-white"
+                                    }`}
+                            >
+                                <Menu className="w-5 h-5" />
+                            </button>
+
                         </div>
                     </div>
-                )}
+                </div >
+            </header >
 
-                {/* Nav links */}
-                <nav className="flex flex-col px-4 py-6 gap-1 flex-1">
-                    {NAV_LINKS.map((link) => (
-                        <Link
-                            key={link.href}
-                            href={link.href}
-                            onClick={onClose}
-                            className="px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-gray-50 hover:text-[#2947b5] transition-colors"
-                        >
-                            {link.label}
-                        </Link>
-                    ))}
-
-                    {user && (
-                        <Link
-                            href="/dashboard"
-                            onClick={onClose}
-                            className="px-4 py-3 rounded-lg text-gray-700 font-medium hover:bg-gray-50 hover:text-[#2947b5] transition-colors flex items-center gap-2"
-                        >
-                            <User className="w-4 h-4" />
-                            Dashboard
-                        </Link>
-                    )}
-                </nav>
-
-                {/* Bottom */}
-                <div className="px-6 py-6 border-t border-gray-100 flex flex-col gap-3">
-                    {user ? (
-                        <button
-                            onClick={() => { onLogout(); onClose() }}
-                            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border border-red-200 text-red-500 hover:bg-red-50 transition-colors text-sm font-medium"
-                        >
-                            <LogOut className="w-4 h-4" />
-                            Sign out
-                        </button>
-                    ) : (
-                        <>
-                            <Link
-                                href="/login"
-                                onClick={onClose}
-                                className="w-full flex items-center justify-center py-3 rounded-xl border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors text-sm font-medium"
-                            >
-                                Sign in
-                            </Link>
-                            <Button
-                                asChild
-                                className="w-full bg-[#ff6b35] hover:bg-[#e55a26] text-white"
-                            >
-                                <Link href="/register" onClick={onClose}>
-                                    List Your Business Free
-                                </Link>
-                            </Button>
-                        </>
-                    )}
-                </div>
-
-            </div>
-        </div>
+            <MobileMenu
+                isOpen={isMobileOpen}
+                onClose={() => setIsMobileOpen(false)}
+                user={user}
+                onLogout={handleLogout}
+            />
+        </>
     )
 }
