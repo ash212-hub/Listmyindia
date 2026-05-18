@@ -41,7 +41,7 @@ export default function LoginPage() {
                 })
             }
 
-            router.push("/")
+            router.push("/dashboard")
         } catch {
             setFormError("Google sign in failed. Please try again.")
         }
@@ -75,7 +75,7 @@ export default function LoginPage() {
                 })
             }
 
-            router.push("/")
+            router.push("/dashboard")
         } catch (err: any) {
             if (err.code === "auth/invalid-credential") {
                 setFormError("Invalid email or password.")

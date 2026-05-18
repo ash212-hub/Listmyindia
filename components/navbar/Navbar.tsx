@@ -1,4 +1,4 @@
- "use client"
+"use client"
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
@@ -97,19 +97,19 @@ export default function Navbar() {
                                             />
                                         ) : (
                                             <div className="w-7 h-7 rounded-full bg-[#2947b5] flex items-center justify-center">
-                                                <span className="text-white text-xs font-bold">
+                                                <span className="text-black text-xs font-bold">
                                                     {user.displayName?.[0] || user.email?.[0] || "U"}
                                                 </span>
                                             </div>
                                         )}
                                         <span
-                                            className={`text-sm font-medium transition-colors ${isScrolled ? "text-gray-700" : "text-white"
+                                            className={`text-sm font-medium transition-colors ${isScrolled || pathname !== "/" ? "text-gray-700" : "text-white"
                                                 }`}
                                         >
                                             {user.displayName?.split(" ")[0] || "Account"}
                                         </span>
                                         <ChevronDown
-                                            className={`w-4 h-4 transition-colors ${isScrolled ? "text-gray-500" : "text-white/70"
+                                            className={`w-4 h-4 transition-colors ${isScrolled || pathname !== "/" ? "text-gray-500" : "text-white/70"
                                                 }`}
                                         />
                                     </button>

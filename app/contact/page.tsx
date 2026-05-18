@@ -265,7 +265,7 @@ export default function ContactPage() {
                                                 className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#2947b5] transition-colors appearance-none bg-white"
                                             >
                                                 <option value="">Select subject</option>
-                                                <option value="list-business">List my business</option>
+                                                <option value="listbusiness">List my business</option>
                                                 <option value="partnership">Partnership inquiry</option>
                                                 <option value="support">Technical support</option>
                                                 <option value="feedback">Feedback</option>
